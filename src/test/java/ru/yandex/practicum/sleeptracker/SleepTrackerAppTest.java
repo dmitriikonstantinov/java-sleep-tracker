@@ -11,11 +11,10 @@ public class SleepTrackerAppTest {
     @Test
     void testCountSessions() {
         List<SleepingSession> sessions = List.of(
-                new SleepingSession(LocalDateTime.of(
-                        2026, 5, 12, 23, 40)
-                        , LocalDateTime.of(2026, 5, 13, 7, 20), Quality.GOOD),
-                new SleepingSession(LocalDateTime.of(2026, 5, 14, 0, 0)
-                        , LocalDateTime.of(2026, 5, 14, 3, 30), Quality.NORMAL)
+                new SleepingSession(LocalDateTime.of(2026, 5, 12, 23, 40),
+                        LocalDateTime.of(2026, 5, 13, 7, 20), Quality.GOOD),
+                new SleepingSession(LocalDateTime.of(2026, 5, 14, 0, 0),
+                        LocalDateTime.of(2026, 5, 14, 3, 30), Quality.NORMAL)
         );
         CountSessionsFunction func = new CountSessionsFunction();
         long count = func.apply(sessions).getValue();
@@ -32,11 +31,11 @@ public class SleepTrackerAppTest {
 
     @Test
     void testMinDurationFunction() {
-        List<SleepingSession> sessions = List.of(new SleepingSession(LocalDateTime.of(
-                        2026, 5, 10, 22, 40), LocalDateTime.of(
-                        2026, 5, 11, 7, 30), Quality.GOOD),
-                new SleepingSession(LocalDateTime.of(2026, 5, 14, 23, 0)
-                        , LocalDateTime.of(2026, 5, 15, 8, 15), Quality.NORMAL)
+        List<SleepingSession> sessions = List.of(
+                new SleepingSession(LocalDateTime.of(2026, 5, 10, 22, 40),
+                        LocalDateTime.of(2026, 5, 11, 7, 30), Quality.GOOD),
+                new SleepingSession(LocalDateTime.of(2026, 5, 14, 23, 0),
+                        LocalDateTime.of(2026, 5, 15, 8, 15), Quality.NORMAL)
         );
         MinDurationFunction func = new MinDurationFunction();
         long min = func.apply(sessions).getValue();
@@ -53,11 +52,11 @@ public class SleepTrackerAppTest {
 
     @Test
     void testAvgDurationFunction() {
-        List<SleepingSession> sessions = List.of(new SleepingSession(LocalDateTime.of(
-                        2026, 5, 10, 22, 40), LocalDateTime.of(
-                        2026, 5, 11, 7, 30), Quality.GOOD),
-                new SleepingSession(LocalDateTime.of(2026, 5, 14, 23, 0)
-                        , LocalDateTime.of(2026, 5, 15, 8, 15), Quality.NORMAL)
+        List<SleepingSession> sessions = List.of(
+                new SleepingSession(LocalDateTime.of(2026, 5, 10, 22, 40),
+                        LocalDateTime.of(2026, 5, 11, 7, 30), Quality.GOOD),
+                new SleepingSession(LocalDateTime.of(2026, 5, 14, 23, 0),
+                        LocalDateTime.of(2026, 5, 15, 8, 15), Quality.NORMAL)
         );
         AvgDurationFunction func = new AvgDurationFunction();
         double avr = func.apply(sessions).getValue();
@@ -74,15 +73,15 @@ public class SleepTrackerAppTest {
 
     @Test
     void testCountBadSessionsFunction() {
-        List<SleepingSession> sessions = List.of(new SleepingSession(LocalDateTime.of(
-                        2026, 5, 10, 22, 40), LocalDateTime.of(
-                        2026, 5, 11, 7, 30), Quality.GOOD),
-                new SleepingSession(LocalDateTime.of(2026, 5, 14, 23, 0)
-                        , LocalDateTime.of(2026, 5, 15, 8, 15), Quality.NORMAL)
-                , new SleepingSession(LocalDateTime.of(2026, 5, 17, 3, 50)
-                        , LocalDateTime.of(2026, 5, 17, 7, 50), Quality.BAD),
-                new SleepingSession(LocalDateTime.of(2026, 5, 18, 22, 0)
-                        , LocalDateTime.of(2026, 5, 19, 4, 20), Quality.BAD)
+        List<SleepingSession> sessions = List.of(
+                new SleepingSession(LocalDateTime.of(2026, 5, 10, 22, 40),
+                        LocalDateTime.of(2026, 5, 11, 7, 30), Quality.GOOD),
+                new SleepingSession(LocalDateTime.of(2026, 5, 14, 23, 0),
+                        LocalDateTime.of(2026, 5, 15, 8, 15), Quality.NORMAL),
+                new SleepingSession(LocalDateTime.of(2026, 5, 17, 3, 50),
+                        LocalDateTime.of(2026, 5, 17, 7, 50), Quality.BAD),
+                new SleepingSession(LocalDateTime.of(2026, 5, 18, 22, 0),
+                        LocalDateTime.of(2026, 5, 19, 4, 20), Quality.BAD)
 
         );
         CountBadSessionsFunction func = new CountBadSessionsFunction();
@@ -99,12 +98,12 @@ public class SleepTrackerAppTest {
     }
 
     @Test
-    void CountSleeplessNightsFunction() {
-        List<SleepingSession> sessions = List.of(new SleepingSession(LocalDateTime.of(
-                        2026, 5, 10, 22, 40), LocalDateTime.of(
-                        2026, 5, 11, 7, 30), Quality.GOOD),
-                new SleepingSession(LocalDateTime.of(2026, 5, 14, 23, 0)
-                        , LocalDateTime.of(2026, 5, 15, 8, 15), Quality.NORMAL)
+    void testCountSleeplessNightsFunction() {
+        List<SleepingSession> sessions = List.of(
+                new SleepingSession(LocalDateTime.of(2026, 5, 10, 22, 40),
+                        LocalDateTime.of(2026, 5, 11, 7, 30), Quality.GOOD),
+                new SleepingSession(LocalDateTime.of(2026, 5, 14, 23, 0),
+                        LocalDateTime.of(2026, 5, 15, 8, 15), Quality.NORMAL)
         );
         CountSleeplessNightsFunction func = new CountSleeplessNightsFunction();
         long sleepLess = func.apply(sessions).getValue();
@@ -118,56 +117,61 @@ public class SleepTrackerAppTest {
         long sleepless = func.apply(sessions).getValue();
         assertEquals(0, sleepless);
     }
+
     @Test
     void testChronotypeOwl() {
         List<SleepingSession> sessions = List.of(
-                new SleepingSession(LocalDateTime.of(2026, 5, 10, 23, 30)
-                        , LocalDateTime.of(2026, 5, 11, 9, 30), Quality.GOOD),
-                new SleepingSession(LocalDateTime.of(2026, 5, 11, 23, 45)
-                        , LocalDateTime.of(2026, 5, 12, 10, 0), Quality.NORMAL)
+                new SleepingSession(LocalDateTime.of(2026, 5, 10, 23, 30),
+                        LocalDateTime.of(2026, 5, 11, 9, 30), Quality.GOOD),
+                new SleepingSession(LocalDateTime.of(2026, 5, 11, 23, 45),
+                        LocalDateTime.of(2026, 5, 12, 10, 0), Quality.NORMAL)
         );
         ChronotypeFunction func = new ChronotypeFunction();
         String result = func.apply(sessions).getValue();
         assertEquals("Сова", result);
     }
+
     @Test
     void testChronotypeLark() {
         List<SleepingSession> sessions = List.of(
-                new SleepingSession(LocalDateTime.of(2026, 5, 10, 21, 59)
-                        , LocalDateTime.of(2026, 5, 11, 6, 30), Quality.GOOD),
-                new SleepingSession(LocalDateTime.of(2026, 5, 11, 21, 45)
-                        , LocalDateTime.of(2026, 5, 12, 6, 59), Quality.NORMAL)
+                new SleepingSession(LocalDateTime.of(2026, 5, 10, 21, 59),
+                        LocalDateTime.of(2026, 5, 11, 6, 30), Quality.GOOD),
+                new SleepingSession(LocalDateTime.of(2026, 5, 11, 21, 45),
+                        LocalDateTime.of(2026, 5, 12, 6, 59), Quality.NORMAL)
         );
         ChronotypeFunction func = new ChronotypeFunction();
         String result = func.apply(sessions).getValue();
         assertEquals("Жаворонок", result);
     }
+
     @Test
     void testChronotypeDove() {
         List<SleepingSession> sessions = List.of(
-                new SleepingSession(LocalDateTime.of(2026, 5, 10, 23, 59)
-                        , LocalDateTime.of(2026, 5, 11, 6, 30), Quality.GOOD),
-                new SleepingSession(LocalDateTime.of(2026, 5, 11, 22, 45)
-                        , LocalDateTime.of(2026, 5, 12, 7, 0), Quality.NORMAL)
+                new SleepingSession(LocalDateTime.of(2026, 5, 10, 23, 59),
+                        LocalDateTime.of(2026, 5, 11, 6, 30), Quality.GOOD),
+                new SleepingSession(LocalDateTime.of(2026, 5, 11, 22, 45),
+                        LocalDateTime.of(2026, 5, 12, 7, 0), Quality.NORMAL)
         );
         ChronotypeFunction func = new ChronotypeFunction();
         String result = func.apply(sessions).getValue();
         assertEquals("Голубь", result);
     }
+
     @Test
     void testChronotypeMixed() {
         List<SleepingSession> sessions = List.of(
-                new SleepingSession(LocalDateTime.of(2026, 5, 10, 23, 30)
-                        , LocalDateTime.of(2026, 5, 11, 9, 30), Quality.GOOD),
-                new SleepingSession(LocalDateTime.of(2026, 5, 11, 21, 45)
-                        , LocalDateTime.of(2026, 5, 12, 6, 30), Quality.NORMAL),
-                new SleepingSession(LocalDateTime.of(2026, 5, 12, 23, 15)
-                        , LocalDateTime.of(2026, 5, 13, 9, 45), Quality.GOOD)
+                new SleepingSession(LocalDateTime.of(2026, 5, 10, 23, 30),
+                        LocalDateTime.of(2026, 5, 11, 9, 30), Quality.GOOD),
+                new SleepingSession(LocalDateTime.of(2026, 5, 11, 21, 45),
+                        LocalDateTime.of(2026, 5, 12, 6, 30), Quality.NORMAL),
+                new SleepingSession(LocalDateTime.of(2026, 5, 12, 23, 15),
+                        LocalDateTime.of(2026, 5, 13, 9, 45), Quality.GOOD)
         );
         ChronotypeFunction func = new ChronotypeFunction();
         String result = func.apply(sessions).getValue();
         assertEquals("Сова", result);  // 2 совы, 1 жаворонок
     }
+
     @Test
     void testChronotypeEmpty() {
         List<SleepingSession> sessions = List.of();
