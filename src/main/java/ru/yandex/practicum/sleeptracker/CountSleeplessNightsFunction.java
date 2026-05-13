@@ -10,6 +10,9 @@ import java.util.function.Function;
 public class CountSleeplessNightsFunction implements Function<List<SleepingSession>, SleepAnalysisResult<Long>> {
     @Override
     public SleepAnalysisResult<Long> apply(List<SleepingSession> sessions) {
+        if (sessions.isEmpty()) {
+            return new SleepAnalysisResult<>("Бессонные ночи", 0L);
+        }
         Set<LocalDate> coveredNight = new HashSet<>();
         sessions.stream().forEach(s -> {
             LocalDateTime start = s.getStart();
