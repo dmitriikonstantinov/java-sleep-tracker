@@ -6,12 +6,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
+import java.time.temporal.ChronoUnit;
 
 public class CountSleeplessNightsFunction implements Function<List<SleepingSession>, SleepAnalysisResult<Long>> {
+    private static final String DESCRIPTION = "Бессонные ночи";
+
     @Override
     public SleepAnalysisResult<Long> apply(List<SleepingSession> sessions) {
         if (sessions.isEmpty()) {
-            return new SleepAnalysisResult<>("Бессонные ночи", 0L);
+            return new SleepAnalysisResult<>(DESCRIPTION, 0L);
         }
         Set<LocalDate> coveredNight = new HashSet<>();
         sessions.stream().forEach(s -> {
@@ -19,20 +22,25 @@ public class CountSleeplessNightsFunction implements Function<List<SleepingSessi
             LocalDateTime end = s.getEnd();
             LocalDate date = start.toLocalDate().equals(end.toLocalDate()) ? start.toLocalDate() : end.toLocalDate();
             LocalDateTime startNight = date.atStartOfDay();
-            LocalDateTime endNight = startNight.plusHours(6);
+            LocalDateTime endNight = startNight.plusHours(Constants.NIGHT_END.getHour());
             if (start.isBefore(endNight) && end.isAfter(startNight)) {
                 coveredNight.add(date);
             }
         });
-        LocalDate firstStart = sessions.stream().map(s -> s.getStart().toLocalDate())
-                .min(LocalDate::compareTo).orElse(null);
+        LocalDate firstStart = sessions.stream()
+                .map(s -> s.getStart().toLocalDate())
+                .min(LocalDate::compareTo)
+                .orElse(null);
 
         LocalDate lastEnd = sessions.stream()
                 .map(s -> s.getEnd().toLocalDate())
                 .max(LocalDate::compareTo)
                 .orElse(null);
-        long totalNights = java.time.temporal.ChronoUnit.DAYS.between(firstStart, lastEnd);
+        long totalNights = ChronoUnit.DAYS.between(firstStart, lastEnd);
+        if (sessions.get(0).getStart().getHour() < 12) {
+            totalNights++;
+        }
         long sleeplessNights = totalNights - coveredNight.size();
-        return new SleepAnalysisResult<>("Бессонные ночи", sleeplessNights);
+        return new SleepAnalysisResult<>(DESCRIPTION, sleeplessNights);
     }
 }

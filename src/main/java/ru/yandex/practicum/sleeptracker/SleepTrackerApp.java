@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 public class SleepTrackerApp {
 
-
     public static List<SleepingSession> readSession(Path path) throws IOException {
         List<String> lines = Files.readAllLines(path);
         return lines.stream().map(line -> {
@@ -57,6 +56,7 @@ public class SleepTrackerApp {
 
         System.out.println(new ChronotypeFunction().apply(sessions).getDescription()
                 + ": " + new ChronotypeFunction().apply(sessions).getValue());
+
     }
 
 }

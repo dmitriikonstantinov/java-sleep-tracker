@@ -179,4 +179,41 @@ public class SleepTrackerAppTest {
         String result = func.apply(sessions).getValue();
         assertEquals("Голубь", result);
     }
+
+    @Test
+    void testSessionCrossMonthBoundary() {
+        List<SleepingSession> sessions = List.of(
+                new SleepingSession(LocalDateTime.of(2026, 1, 31, 23, 30),
+                        LocalDateTime.of(2026, 2, 1, 7, 0), Quality.GOOD)
+        );
+        CountSleeplessNightsFunction func = new CountSleeplessNightsFunction();
+        long sleepless = func.apply(sessions).getValue();
+        assertEquals(0, sleepless);
+    }
+
+    @Test
+    void testFirstSessionAfterMidnight() {
+        List<SleepingSession> sessions = List.of(
+                new SleepingSession(LocalDateTime.of(2026, 1, 1, 1, 0),
+                        LocalDateTime.of(2026, 1, 1, 5, 0), Quality.GOOD)
+        );
+        CountSleeplessNightsFunction func = new CountSleeplessNightsFunction();
+        long sleepless = func.apply(sessions).getValue();
+        assertEquals(0, sleepless);
+    }
+
+    @Test
+    void testChronotypeTie() {
+        List<SleepingSession> sessions = List.of(
+                new SleepingSession(LocalDateTime.of(2026, 1, 1, 23, 30),
+                        LocalDateTime.of(2026, 1, 2, 10, 0), Quality.GOOD),
+                new SleepingSession(LocalDateTime.of(2026, 1, 2, 21, 0),
+                        LocalDateTime.of(2026, 1, 3, 6, 30), Quality.GOOD),
+                new SleepingSession(LocalDateTime.of(2026, 1, 3, 22, 30),
+                        LocalDateTime.of(2026, 1, 4, 8, 0), Quality.GOOD)
+        );
+        ChronotypeFunction func = new ChronotypeFunction();
+        String result = func.apply(sessions).getValue();
+        assertEquals("Голубь", result);
+    }
 }
