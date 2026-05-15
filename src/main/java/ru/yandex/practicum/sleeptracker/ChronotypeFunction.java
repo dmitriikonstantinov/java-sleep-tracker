@@ -12,6 +12,9 @@ public class ChronotypeFunction implements Function<List<SleepingSession>, Sleep
 
     @Override
     public SleepAnalysisResult<String> apply(List<SleepingSession> sessions) {
+        if (sessions.isEmpty()) {
+            return new SleepAnalysisResult<>(DESCRIPTION, Chronotype.DOVE.getDisplayName());
+        }
         Map<Chronotype, Integer> counts = new HashMap<>();
         counts.put(Chronotype.OWL, 0);
         counts.put(Chronotype.LARK, 0);
@@ -35,10 +38,19 @@ public class ChronotypeFunction implements Function<List<SleepingSession>, Sleep
                 }
             }
         });
-        Chronotype resultType = counts.entrySet().stream()
-                .max(Map.Entry.comparingByValue())
-                .map(Map.Entry::getKey)
-                .orElse(Chronotype.DOVE);
+
+        int owl = counts.get(Chronotype.OWL);
+        int lark = counts.get(Chronotype.LARK);
+        int dove = counts.get(Chronotype.DOVE);
+
+        Chronotype resultType;
+        if (owl > lark && owl > dove) {
+            resultType = Chronotype.OWL;
+        } else if (lark > owl && lark > dove) {
+            resultType = Chronotype.LARK;
+        } else {
+            resultType = Chronotype.DOVE; // ничья или все равны
+        }
         return new SleepAnalysisResult<>(DESCRIPTION, resultType.getDisplayName());
     }
 }
