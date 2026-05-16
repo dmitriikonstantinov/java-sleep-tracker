@@ -7,9 +7,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SleepTrackerApp {
+    private static final List<Function<List<SleepingSession>, SleepAnalysisResult>> FUNCTIONS = List.of(
+            new CountSessionsFunction(),
+            new MinDurationFunction(),
+            new MaxDurationFunction(),
+            new AvgDurationFunction(),
+            new CountBadSessionsFunction(),
+            new CountSleeplessNightsFunction(),
+            new ChronotypeFunction()
+    );
 
     public static List<SleepingSession> readSession(Path path) throws IOException {
         List<String> lines = Files.readAllLines(path);
@@ -36,26 +46,10 @@ public class SleepTrackerApp {
             return;
         }
 
-        System.out.println(new CountSessionsFunction().apply(sessions).getDescription()
-                + ": " + new CountSessionsFunction().apply(sessions).getValue());
-
-        System.out.println(new MinDurationFunction().apply(sessions).getDescription()
-                + ": " + new MinDurationFunction().apply(sessions).getValue());
-
-        System.out.println(new MaxDurationFunction().apply(sessions).getDescription()
-                + ": " + new MaxDurationFunction().apply(sessions).getValue());
-
-        System.out.println(new AvgDurationFunction().apply(sessions).getDescription()
-                + ": " + new AvgDurationFunction().apply(sessions).getValue());
-
-        System.out.println(new CountBadSessionsFunction().apply(sessions).getDescription()
-                + ": " + new CountBadSessionsFunction().apply(sessions).getValue());
-
-        System.out.println(new CountSleeplessNightsFunction().apply(sessions).getDescription()
-                + ": " + new CountSleeplessNightsFunction().apply(sessions).getValue());
-
-        System.out.println(new ChronotypeFunction().apply(sessions).getDescription()
-                + ": " + new ChronotypeFunction().apply(sessions).getValue());
+        for (Function<List<SleepingSession>, SleepAnalysisResult> func : FUNCTIONS) {
+            SleepAnalysisResult result = func.apply(sessions);
+            System.out.println(result.getDescription() + ": " + result.getValue());
+        }
 
     }
 

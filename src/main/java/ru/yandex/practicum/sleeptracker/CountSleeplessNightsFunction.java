@@ -8,13 +8,13 @@ import java.util.Set;
 import java.util.function.Function;
 import java.time.temporal.ChronoUnit;
 
-public class CountSleeplessNightsFunction implements Function<List<SleepingSession>, SleepAnalysisResult<Long>> {
+public class CountSleeplessNightsFunction implements Function<List<SleepingSession>, SleepAnalysisResult> {
     private static final String DESCRIPTION = "Бессонные ночи";
 
     @Override
-    public SleepAnalysisResult<Long> apply(List<SleepingSession> sessions) {
+    public SleepAnalysisResult apply(List<SleepingSession> sessions) {
         if (sessions.isEmpty()) {
-            return new SleepAnalysisResult<>(DESCRIPTION, 0L);
+            return new SleepAnalysisResult(DESCRIPTION, 0L);
         }
         Set<LocalDate> coveredNight = new HashSet<>();
         sessions.stream().forEach(s -> {
@@ -41,6 +41,6 @@ public class CountSleeplessNightsFunction implements Function<List<SleepingSessi
             totalNights++;
         }
         long sleeplessNights = totalNights - coveredNight.size();
-        return new SleepAnalysisResult<>(DESCRIPTION, sleeplessNights);
+        return new SleepAnalysisResult(DESCRIPTION, sleeplessNights);
     }
 }

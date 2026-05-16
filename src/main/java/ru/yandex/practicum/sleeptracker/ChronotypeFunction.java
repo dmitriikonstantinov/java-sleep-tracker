@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public class ChronotypeFunction implements Function<List<SleepingSession>, SleepAnalysisResult<String>> {
+public class ChronotypeFunction implements Function<List<SleepingSession>, SleepAnalysisResult> {
     private static final String DESCRIPTION = "Хронотип";
 
     @Override
-    public SleepAnalysisResult<String> apply(List<SleepingSession> sessions) {
+    public SleepAnalysisResult apply(List<SleepingSession> sessions) {
         if (sessions.isEmpty()) {
-            return new SleepAnalysisResult<>(DESCRIPTION, Chronotype.DOVE.getDisplayName());
+            return new SleepAnalysisResult(DESCRIPTION, Chronotype.DOVE.getDisplayName());
         }
         Map<Chronotype, Integer> counts = new HashMap<>();
         counts.put(Chronotype.OWL, 0);
@@ -51,6 +51,6 @@ public class ChronotypeFunction implements Function<List<SleepingSession>, Sleep
         } else {
             resultType = Chronotype.DOVE; // ничья или все равны
         }
-        return new SleepAnalysisResult<>(DESCRIPTION, resultType.getDisplayName());
+        return new SleepAnalysisResult(DESCRIPTION, resultType.getDisplayName());
     }
 }

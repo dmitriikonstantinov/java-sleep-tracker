@@ -17,16 +17,14 @@ public class SleepTrackerAppTest {
                         LocalDateTime.of(2026, 5, 14, 3, 30), Quality.NORMAL)
         );
         CountSessionsFunction func = new CountSessionsFunction();
-        long count = func.apply(sessions).getValue();
-        assertEquals(2, count);
+        assertEquals(2L, func.apply(sessions).getValue());
     }
 
     @Test
     void testCountSessionsEmpty() {
         List<SleepingSession> sessions = List.of();
         CountSessionsFunction func = new CountSessionsFunction();
-        long count = func.apply(sessions).getValue();
-        assertEquals(0, count);
+        assertEquals(0L, func.apply(sessions).getValue());
     }
 
     @Test
@@ -38,16 +36,14 @@ public class SleepTrackerAppTest {
                         LocalDateTime.of(2026, 5, 15, 8, 15), Quality.NORMAL)
         );
         MinDurationFunction func = new MinDurationFunction();
-        long min = func.apply(sessions).getValue();
-        assertEquals(530, min);
+        assertEquals(530L, func.apply(sessions).getValue());
     }
 
     @Test
     void testMinDurationFunctionEmpty() {
         List<SleepingSession> sessions = List.of();
         MinDurationFunction func = new MinDurationFunction();
-        long min = func.apply(sessions).getValue();
-        assertEquals(0, min);
+        assertEquals(0L, func.apply(sessions).getValue());
     }
 
     @Test
@@ -59,16 +55,14 @@ public class SleepTrackerAppTest {
                         LocalDateTime.of(2026, 5, 15, 8, 15), Quality.NORMAL)
         );
         AvgDurationFunction func = new AvgDurationFunction();
-        double avr = func.apply(sessions).getValue();
-        assertEquals(542.5, avr);
+        assertEquals(542.5, func.apply(sessions).getValue());
     }
 
     @Test
     void testAvgDurationFunctionEmpty() {
         List<SleepingSession> sessions = List.of();
         AvgDurationFunction func = new AvgDurationFunction();
-        double avr = func.apply(sessions).getValue();
-        assertEquals(0.0, avr);
+        assertEquals(0.0, func.apply(sessions).getValue());
     }
 
     @Test
@@ -85,16 +79,14 @@ public class SleepTrackerAppTest {
 
         );
         CountBadSessionsFunction func = new CountBadSessionsFunction();
-        long bad = func.apply(sessions).getValue();
-        assertEquals(2, bad);
+        assertEquals(2L, func.apply(sessions).getValue());
     }
 
     @Test
     void testCountBadSessionsFunctionEmpty() {
         List<SleepingSession> sessions = List.of();
         CountBadSessionsFunction func = new CountBadSessionsFunction();
-        long bad = func.apply(sessions).getValue();
-        assertEquals(0, bad);
+        assertEquals(0L, func.apply(sessions).getValue());
     }
 
     @Test
@@ -106,16 +98,14 @@ public class SleepTrackerAppTest {
                         LocalDateTime.of(2026, 5, 15, 8, 15), Quality.NORMAL)
         );
         CountSleeplessNightsFunction func = new CountSleeplessNightsFunction();
-        long sleepLess = func.apply(sessions).getValue();
-        assertEquals(3, sleepLess);
+        assertEquals(3L, func.apply(sessions).getValue());
     }
 
     @Test
     void testCountSleeplessNightsEmpty() {
         List<SleepingSession> sessions = List.of();
         CountSleeplessNightsFunction func = new CountSleeplessNightsFunction();
-        long sleepless = func.apply(sessions).getValue();
-        assertEquals(0, sleepless);
+        assertEquals(0L, func.apply(sessions).getValue());
     }
 
     @Test
@@ -127,8 +117,7 @@ public class SleepTrackerAppTest {
                         LocalDateTime.of(2026, 5, 12, 10, 0), Quality.NORMAL)
         );
         ChronotypeFunction func = new ChronotypeFunction();
-        String result = func.apply(sessions).getValue();
-        assertEquals("Сова", result);
+        assertEquals("Сова", func.apply(sessions).getValue());
     }
 
     @Test
@@ -140,8 +129,7 @@ public class SleepTrackerAppTest {
                         LocalDateTime.of(2026, 5, 12, 6, 59), Quality.NORMAL)
         );
         ChronotypeFunction func = new ChronotypeFunction();
-        String result = func.apply(sessions).getValue();
-        assertEquals("Жаворонок", result);
+        assertEquals("Жаворонок", func.apply(sessions).getValue());
     }
 
     @Test
@@ -153,8 +141,7 @@ public class SleepTrackerAppTest {
                         LocalDateTime.of(2026, 5, 12, 7, 0), Quality.NORMAL)
         );
         ChronotypeFunction func = new ChronotypeFunction();
-        String result = func.apply(sessions).getValue();
-        assertEquals("Голубь", result);
+        assertEquals("Голубь", func.apply(sessions).getValue());
     }
 
     @Test
@@ -168,16 +155,14 @@ public class SleepTrackerAppTest {
                         LocalDateTime.of(2026, 5, 13, 9, 45), Quality.GOOD)
         );
         ChronotypeFunction func = new ChronotypeFunction();
-        String result = func.apply(sessions).getValue();
-        assertEquals("Сова", result);  // 2 совы, 1 жаворонок
+        assertEquals("Сова", func.apply(sessions).getValue());
     }
 
     @Test
     void testChronotypeEmpty() {
         List<SleepingSession> sessions = List.of();
         ChronotypeFunction func = new ChronotypeFunction();
-        String result = func.apply(sessions).getValue();
-        assertEquals("Голубь", result);
+        assertEquals("Голубь", func.apply(sessions).getValue());
     }
 
     @Test
@@ -187,8 +172,7 @@ public class SleepTrackerAppTest {
                         LocalDateTime.of(2026, 2, 1, 7, 0), Quality.GOOD)
         );
         CountSleeplessNightsFunction func = new CountSleeplessNightsFunction();
-        long sleepless = func.apply(sessions).getValue();
-        assertEquals(0, sleepless);
+        assertEquals(0L, func.apply(sessions).getValue());
     }
 
     @Test
@@ -198,8 +182,7 @@ public class SleepTrackerAppTest {
                         LocalDateTime.of(2026, 1, 1, 5, 0), Quality.GOOD)
         );
         CountSleeplessNightsFunction func = new CountSleeplessNightsFunction();
-        long sleepless = func.apply(sessions).getValue();
-        assertEquals(0, sleepless);
+        assertEquals(0L, func.apply(sessions).getValue());
     }
 
     @Test
@@ -213,7 +196,6 @@ public class SleepTrackerAppTest {
                         LocalDateTime.of(2026, 1, 4, 8, 0), Quality.GOOD)
         );
         ChronotypeFunction func = new ChronotypeFunction();
-        String result = func.apply(sessions).getValue();
-        assertEquals("Голубь", result);
+        assertEquals("Голубь", func.apply(sessions).getValue());
     }
 }
